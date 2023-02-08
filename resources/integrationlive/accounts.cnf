@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IDataXMLCoder version="1.0">
+  <record javaclass="com.wm.data.ISMemDataImpl">
+    <record name="default" javaclass="com.wm.data.ISMemDataImpl">
+      <value name="alias">default</value>
+      <jboolean name="isEnabled">true</jboolean>
+      <value name="username">stephane.talland</value>
+      <value name="pswdHandle">wm.is.admin.ilive.stephane.talland.default</value>
+      <value name="iLiveURL">https://wmioplayground.int-aws-us.webmethods.io</value>
+      <value name="umURL">nhps://um-nlb.int-aws-us.webmethods.io:443//shared-um-svc-http.ic-shared-1012/</value>
+      <jboolean name="authenticate">true</jboolean>
+      <array name="stages" type="record" depth="1">
+        <record javaclass="com.wm.data.ISMemDataImpl">
+          <value name="stageName">stage00</value>
+          <value name="stageDisplayName">Development</value>
+          <value name="umURL">nhps://um-nlb.int-aws-us.webmethods.io:443//shared-um-svc-http.ic-shared-1012/</value>
+        </record>
+      </array>
+      <record name="queueNames" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="fromOnPremiseQueueName">1691505343_from_on_premise</value>
+        <value name="toOnPremiseQueueName">1691505343_to_on_premise</value>
+        <value name="fromOnPremiseAdminQueueName">1691505343_from_on_premise_admin</value>
+        <value name="toOnPremiseAdminQueueName">1691505343_to_on_premise_admin</value>
+      </record>
+      <record name="queues" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="fromOnPremiseQueueName">1691505343_from_on_premise</value>
+        <value name="toOnPremiseQueueName">1691505343_to_on_premise</value>
+        <value name="fromOnPremiseAdminQueueName">1691505343_from_on_premise_admin</value>
+        <value name="toOnPremiseAdminQueueName">1691505343_to_on_premise_admin</value>
+      </record>
+      <value name="tenantId">1691505343</value>
+      <jboolean name="isEdgeServer">false</jboolean>
+      <null name="agentID"/>
+      <null name="agentName"/>
+      <null name="agentGroup"/>
+      <null name="accessTokenHandle"/>
+      <null name="refreshTokenHandle"/>
+    </record>
+  </record>
+</IDataXMLCoder>

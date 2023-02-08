@@ -1,0 +1,5 @@
+*.bak
+.env
+
+/.classpath
+/.project
