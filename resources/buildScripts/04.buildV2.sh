@@ -20,6 +20,7 @@ docker login -u "${CR_ID}" -p "${CR_SECRET}" "${CR_URL}"  || exit 3
 
 echo "Building tag ${SERVICE_IMAGE_TAG_BASE}"
 docker build \
+  --no-cache \
   --build-arg __from_img=${BASE_IMAGE_TAG} \
   -t "${SERVICE_IMAGE_TAG_BASE}" . || exit 4
 
