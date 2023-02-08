@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "0c7ec77b-c7f8-43db-9279-8d909c2d3351",
+		"name": "DecPurchaseOrders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Record purchase order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"var location = jsonData.location;",
+							"var status = jsonData.status;",
+							"var orderReference = jsonData.orderReference;",
+							"",
+							"pm.collectionVariables.set(\"location\", location);",
+							"pm.collectionVariables.set(\"status\", status);",
+							"pm.collectionVariables.set(\"orderReference\", orderReference);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Checking orderReference\", function () {",
+							"    pm.expect(isUUID(orderReference)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Checking lastName\", function () {",
+							"    pm.expect(status).to.eql(\"OK\");",
+							"});",
+							"",
+							"",
+							"function isUUID ( uuid ) {",
+							"    let s = \"\" + uuid;",
+							"",
+							"    s = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');",
+							"    if (s === null) {",
+							"      return false;",
+							"    }",
+							"    return true;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var documentId = Date.now();",
+							"",
+							"pm.collectionVariables.set(\"documentId\", documentId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{hybridPassword}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{hybridUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"documentId\": \"{{documentId}}\",\n    \"creationDate\": \"2023-02-08\",\n    \"supplierId\": \"111222333\",\n    \"supplierIdType\": \"EAN13\",\n    \"processingDateTime\": \"2023-02-08 15:00:00.000\",\n    \"promisedShipDateTime\": \"2023-02-12 00:00:00.000\",\n    \"requiredDeliveryDateTime\": \"2023-02-14 12:30:00.000\",\n    \"closureDateTime\": \"2023-02-15 20:00:00.000\",\n    \"orderLine\": [\n        {\n            \"lineNumber\": \"00001\",\n            \"documentReference\": {\n                \"type\": \"SAPPurchaseOrder\",\n                \"scheme\": \"SAPR3\",\n                \"id\": \"00142158\"\n            },\n            \"status\": \"C\",\n            \"quantityUnit\": \"PC\",\n            \"quantityValue\": \"2\",\n            \"typedAmount\": [\n                {\n                    \"type\": \"SalesAmount\",\n                    \"amount\": \"1000\",\n                    \"currency\": \"EUR\"\n                },\n                {\n                    \"type\": \"SpecialOfferAmount\",\n                    \"amount\": \"1000\",\n                    \"currency\": \"EUR\"\n                },\n                {\n                    \"type\": \"TaxInclusiveAmount\",\n                    \"amount\": \"1200\",\n                    \"currency\": \"EUR\"\n                }\n            ]\n        }\n    ],\n    \"shippingAddress\": {\n        \"street\": \"Some place\",\n        \"postCode\": \"12345\",\n        \"city\": \"Somewhere\",\n        \"country\": \"FR\"\n    },\n    \"transactionId\": \"51gdvg00gop4vbra00000n8a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hybridUrl}}/orders",
+					"host": [
+						"{{hybridUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get purchase order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"var orderReference = jsonData.order.orderReference;",
+							"var documentId = jsonData.order.documentId;",
+							"",
+							"var expectedDocumentId = pm.collectionVariables.get(\"documentId\");",
+							"var expectedOrderReference = pm.collectionVariables.get(\"orderReference\");",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Checking orderReference\", function () {",
+							"    pm.expect(orderReference).to.eql(expectedOrderReference);",
+							"});",
+							"",
+							"pm.test(\"Checking documentId\", function () {",
+							"    pm.expect(documentId).to.eql(expectedDocumentId.toString());",
+							"});",
+							"",
+							"",
+							"function isUUID ( uuid ) {",
+							"    let s = \"\" + uuid;",
+							"",
+							"    s = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');",
+							"    if (s === null) {",
+							"      return false;",
+							"    }",
+							"    return true;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/orders/:orderId",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{documentId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "documentId",
+			"value": ""
+		},
+		{
+			"key": "location",
+			"value": ""
+		},
+		{
+			"key": "status",
+			"value": ""
+		},
+		{
+			"key": "orderReference",
+			"value": ""
+		}
+	]
+}
