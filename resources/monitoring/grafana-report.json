@@ -39,7 +39,6 @@
             "mode": "thresholds"
           },
           "mappings": [],
-          "max": 100,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -58,12 +57,15 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 0,
+        "w": 12,
+        "x": 6,
         "y": 0
       },
-      "id": 26,
+      "id": 38,
       "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -72,12 +74,9 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "textMode": "auto"
       },
       "pluginVersion": "9.3.6",
-      "repeat": "pod",
-      "repeatDirection": "h",
       "targets": [
         {
           "datasource": {
@@ -85,14 +84,106 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "builder",
-          "expr": "sag_is_server_proc_cpu_percent{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\"}",
-          "legendFormat": "__auto",
+          "expr": "sag_is_uptime_seconds{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\"}",
+          "legendFormat": "{{kubernetes_pod_name}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "MSR CPU usage ($pod)",
-      "type": "gauge"
+      "title": "Pod uptime",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P1809F7CD0C75ACF3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "builder",
+          "expr": "sag_is_server_threads{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\"}",
+          "legendFormat": "{{kubernetes_pod_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "MSR thread usage",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -211,13 +302,13 @@
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "smooth",
+            "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "auto",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -250,7 +341,7 @@
         "x": 0,
         "y": 16
       },
-      "id": 12,
+      "id": 30,
       "options": {
         "legend": {
           "calcs": [],
@@ -270,13 +361,13 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "builder",
-          "expr": "sag_is_server_proc_cpu_percent{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\"}",
+          "expr": "sag_is_total_http_requests{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\"}",
           "legendFormat": "{{kubernetes_pod_name}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "MSR CPU usage",
+      "title": "Total HTTP requests",
       "type": "timeseries"
     },
     {
@@ -434,7 +525,7 @@
         "x": 0,
         "y": 24
       },
-      "id": 30,
+      "id": 35,
       "options": {
         "legend": {
           "calcs": [],
@@ -454,13 +545,105 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "builder",
-          "expr": "sag_is_total_http_requests{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\"}",
+          "expr": "sag_is_service_number_access{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\", service=\"DECPURCHASEORDER.SERVICE:RECORDPURCHASEORDER\"}",
           "legendFormat": "{{kubernetes_pod_name}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total HTTP requests",
+      "title": "Service invocation RecordPurchaseOrder",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P1809F7CD0C75ACF3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 37,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "builder",
+          "expr": "sag_is_service_number_errors{app=\"purchase-order\", kubernetes_pod_name=~\"$pod\", service=\"DECPURCHASEORDER.SERVICE:RECORDPURCHASEORDER\"}",
+          "legendFormat": "{{kubernetes_pod_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Service error RecordPurchaseOrder",
       "type": "timeseries"
     }
   ],
@@ -510,6 +693,6 @@
   "timezone": "",
   "title": "Purchase Order monitoring",
   "uid": "TCIn0FIVk",
-  "version": 4,
+  "version": 8,
   "weekStart": ""
 }
