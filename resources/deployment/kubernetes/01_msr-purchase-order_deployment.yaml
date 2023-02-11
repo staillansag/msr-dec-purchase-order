@@ -65,26 +65,21 @@ spec:
                 configMapKeyRef:
                   name: environment-config
                   key: databaseName
-            - name: MSR_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: environment-config
-                  key: domainName
             - name: IO_INT_URL
               valueFrom:
                 configMapKeyRef:
                   name: environment-config
-                  key: wmioIntegrationPlaygroundUrl
+                  key: wmioIntegrationUrl
             - name: IO_INT_USER
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: wmioIntegrationPlaygroundUser
+                  key: wmioIntegrationUser
             - name: IO_INT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: wmioIntegrationPlaygroundPassword
+                  key: wmioIntegrationPassword
             - name: KAFKA_SERVER_LIST
               valueFrom:
                 configMapKeyRef:

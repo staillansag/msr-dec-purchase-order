@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment-config
+data:
+  wmioIntegrationUrl: "webMethods.io Integration URL"
+  kafkaServerList: "Kafka server list"
+  databaseServerName: "Database name"
+  databaseServerPort: "Database server port"
+  databaseName: "Database name"
+  elasticUrl: "Elastic search url"
+  elasticPort: "Elastic search port"
+  elasticScheme: "Elastic search scheme (http or https)"

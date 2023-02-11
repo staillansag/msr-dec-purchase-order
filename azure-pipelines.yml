@@ -20,11 +20,6 @@ stages:
   - job: BuildImage
 
     steps:
-    - task: DownloadSecureFile@1
-      name: kubectlConfig
-      displayName: 'Download kubectl config'
-      inputs:
-        secureFile: 'config-aks.yml'
 
     - task: DownloadSecureFile@1
       displayName: 'Download test environment file'
@@ -37,6 +32,18 @@ stages:
       displayName: 'Download container registry credentials'
       inputs:
         secureFile: 'cr.credentials.sh'
+
+    - task: DownloadSecureFile@1
+      name: KubernetesConfigMap
+      displayName: 'Download container registry credentials'
+      inputs:
+        secureFile: '00_msr-purchase-order_configMap.yaml'
+
+    - task: DownloadSecureFile@1
+      name: KubernetesSecret
+      displayName: 'Download container registry credentials'
+      inputs:
+        secureFile: '00_msr-purchase-order_secret.yaml'
 
     - task: DownloadSecureFile@1
       name: AzureSPCredentials
