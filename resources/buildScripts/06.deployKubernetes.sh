@@ -1,8 +1,6 @@
  #!/bin/bash
 . ./resources/buildScripts/setEnv.sh
 
-env
-
 echo "Getting Config Map..."
 if [ ! -f "${KUBERNETESCONFIGMAP_SECUREFILEPATH}" ]; then
   echo "Secure file path not present: ${KUBERNETESCONFIGMAP_SECUREFILEPATH}"

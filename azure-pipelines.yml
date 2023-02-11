@@ -1,4 +1,3 @@
-# My News Service build pipeline
 
 trigger: 
   - main
@@ -59,12 +58,6 @@ stages:
   - job: DeployKubernetes
 
     steps:  
-
-    - task: DownloadSecureFile@1
-      name: kubernetesSecrets
-      displayName: 'Download kubernetes secrets'
-      inputs:
-        secureFile: 'kubernetes-secrets.yaml'
 
     - task: DownloadSecureFile@1
       name: KubernetesConfigMap
