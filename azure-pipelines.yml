@@ -22,7 +22,7 @@ stages:
     steps:
 
     - task: DownloadSecureFile@1
-      displayName: 'Download test environment file'
+      displayName: 'Download test environment config file'
       name: dockerEnv
       inputs:
         secureFile: 'dec-purchase-order-qa.env'  
@@ -35,13 +35,13 @@ stages:
 
     - task: DownloadSecureFile@1
       name: KubernetesConfigMap
-      displayName: 'Download container registry credentials'
+      displayName: 'Download Kubernetes config map'
       inputs:
         secureFile: '00_msr-purchase-order_configMap.yaml'
 
     - task: DownloadSecureFile@1
       name: KubernetesSecret
-      displayName: 'Download container registry credentials'
+      displayName: 'Download Kubernetes secret'
       inputs:
         secureFile: '00_msr-purchase-order_secret.yaml'
 

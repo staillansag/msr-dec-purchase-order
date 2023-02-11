@@ -1,13 +1,15 @@
  #!/bin/bash
 . ./resources/buildScripts/setEnv.sh
 
-echo "Getting service principal credentials..."
+env
+
+echo "Getting Config Map..."
 if [ ! -f "${KUBERNETESCONFIGMAP_SECUREFILEPATH}" ]; then
   echo "Secure file path not present: ${KUBERNETESCONFIGMAP_SECUREFILEPATH}"
   exit 1
 fi
 
-echo "Getting service principal credentials..."
+echo "Getting Secret..."
 if [ ! -f "${KUBERNETESSECRET_SECUREFILEPATH}" ]; then
   echo "Secure file path not present: ${KUBERNETESSECRET_SECUREFILEPATH}"
   exit 1
