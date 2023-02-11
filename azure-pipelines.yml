@@ -34,18 +34,6 @@ stages:
         secureFile: 'cr.credentials.sh'
 
     - task: DownloadSecureFile@1
-      name: KubernetesConfigMap
-      displayName: 'Download Kubernetes config map'
-      inputs:
-        secureFile: '00_msr-purchase-order_configMap.yaml'
-
-    - task: DownloadSecureFile@1
-      name: KubernetesSecret
-      displayName: 'Download Kubernetes secret'
-      inputs:
-        secureFile: '00_msr-purchase-order_secret.yaml'
-
-    - task: DownloadSecureFile@1
       name: AzureSPCredentials
       displayName: 'Download Azure SP credentials'
       inputs:
@@ -77,6 +65,18 @@ stages:
       displayName: 'Download kubernetes secrets'
       inputs:
         secureFile: 'kubernetes-secrets.yaml'
+
+    - task: DownloadSecureFile@1
+      name: KubernetesConfigMap
+      displayName: 'Download Kubernetes config map'
+      inputs:
+        secureFile: '00_msr-purchase-order_configMap.yaml'
+
+    - task: DownloadSecureFile@1
+      name: KubernetesSecret
+      displayName: 'Download Kubernetes secret'
+      inputs:
+        secureFile: '00_msr-purchase-order_secret.yaml'
 
     - script: chmod u+x ./resources/buildScripts/*.sh
       displayName: "Grant shell execution permissions"
