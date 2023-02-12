@@ -162,6 +162,7 @@ Première étape : construire un fichier .env contenant toutes les variables d'e
 Contenu du fichier .env un exemple est disponible dans le répertoire resources/deployment/docker) :
 ```
 SAG_IS_CONFIG_PROPERTIES=/opt/softwareag/IntegrationServer/packages/DecPurchaseOrder/application.properties
+SAG_IS_LICENSE_FILE=/opt/softwareag/IntegrationServer/config/licenseKey.xml
 IO_INT_URL=webmethods.io Integration url
 IO_INT_USER=webmethods.io user
 IO_INT_PASSWORD=webmethods.io password
@@ -178,6 +179,11 @@ DB_SERVERNAME=Database server
 Ensuite vous pouvez instancier votre conteneur Docker avec cette commande :
 ```
 docker run --name msr-dec-purchase-order -dp 7777:5555 --env-file .env "${SERVICE_IMAGE_TAG_BASE}"
+```
+
+Si vous souhaiter utiliser votre propre licence MSR, en lieu et place de la licence d'essai intégrée à l'image de base, utilisez cette commande qui ajouter le montage du fichier licence en question :
+```
+docker run --name msr-dec-purchase-order -dp 7777:5555 --env-file .env -v /path/to/your/licenseKey.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml "${SERVICE_IMAGE_TAG_BASE}"
 ```
 
 En général il faut entre 15 secondes et 1 minutes au MSR pour démarrer.
@@ -214,6 +220,8 @@ J'utilise ici une collection Postman dont l'export json est dans le répertoire 
 TODO: ajouter exemple de fichier d'environnement
 
 ## Pipeline de CI/CD
+
+![Pipeline de CI/CD](https://github.com/staillansag/msr-dec-purchase-order/blob/master/resources/images/CICDPipeline.png)
 
 Le répertoire resources/buildScripts contient un ensemble de scripts pour gérer
 -   le build et les sanity checks de l'image (en la déployant dans un conteneur Docker)
