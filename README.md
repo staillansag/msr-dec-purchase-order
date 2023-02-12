@@ -194,7 +194,7 @@ Il est possible de configurer ce mot de passe par défaut en passant par les pro
 ## Déploiement Kubernetes
 
 Si vous souhaitez déployer sur AKS, vous pouvez vous appuyer sur ce projet: https://github.com/staillansag/wm-config/tree/main/aks
-Vous avez un ensemble de scripts de création et configuration d'un cluster, avec les orchestrations Azure Pipelines qui vont avec.
+Vous avez un ensemble de scripts de création et configuration d'un cluster, avec l'orchestration Azure Pipelines qui va avec.
 
 Les descripteurs de déploiement sont dans le répertoire resources/deployment/kubernetes
 
@@ -236,5 +236,27 @@ Note: j'utilise un agent Azure Pipelines dans lequel j'ai pré-installé Docker 
 
 ## Monitoring technique
 
+J'utilise ici le couple Prometheus - Grafana.
+
+Pour le déploiement, voir https://github.com/staillansag/wm-config/blob/main/aks/11-install_prometheus-grafana.sh
+
+Prometheus est configuré pour découvrir automatiquement les pods qui possèdent l'annotation suivante dans la section spec/template/metadata:
+`prometheus.io/scrape: "true"`
+
+Une clause port avec un port explicitement nommé "metrics" indique à Prometheus quel port interroger pour récupérer les métriques:
+```
+ports:
+  - name: metrics
+    containerPort: 5555
+```
 
 ## Monitoring applicatif
+
+J'utilise ici EFK, c'est à dire
+- Elastic Search pour l'indexation et le stockage des logs applicatives
+- FluentD pour la récupération de ces logs dans le cluster Kubernetes et l'envoi à Elastic Search (en pseudo temps réel)
+- Kibana pour la visualisation des logs
+
+L'installation et la configuration d'Elastic Search et Kibana sont amplement documentées sur Internet.
+
+Pour le déploiement de FluentD, voir https://github.com/staillansag/wm-config/blob/main/aks/12-install_fluentD.sh
