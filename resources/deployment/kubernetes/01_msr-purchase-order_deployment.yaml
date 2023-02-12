@@ -30,14 +30,14 @@ spec:
             - name: metrics
               containerPort: 5555
           volumeMounts:
-            - mountPath: "/opt/softwareag/IntegrationServer/config/licenseKey.xml"
+            - mountPath: "/tmp/license"
               name: licenses
               readOnly: true
           env:
             - name: SAG_IS_CONFIG_PROPERTIES
               value: /opt/softwareag/IntegrationServer/packages/DecPurchaseOrder/application.properties  
             - name: SAG_IS_LICENSE_FILE
-              value: /opt/softwareag/IntegrationServer/config/licenseKey.xml 
+              value: /tmp/license/msr-license 
             - name: SERVER_LOCATION
               value: kubernetes
             - name: DATASOURCE_CLASS
