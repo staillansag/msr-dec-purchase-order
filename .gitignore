@@ -5,3 +5,6 @@
 /.project
 
 *environment.json
+*secret.yaml
+*secret.yml
+00_msr-purchase-order_configMap.yaml
