@@ -5,9 +5,14 @@ metadata:
   labels:
     name: msr-purchase-order
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  sessionAffinity: ClientIP
   ports:
-  - port: 80
+  - port: 5115
     targetPort: 5555
+    name: msr-purchase-order-admin
+  - port: 5119
+    targetPort: 9999
+    name: msr-purchase-order-diag
   selector:
     app: purchase-order

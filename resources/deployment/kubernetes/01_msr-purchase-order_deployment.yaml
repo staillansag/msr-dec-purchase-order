@@ -23,50 +23,19 @@ spec:
         app: purchase-order
     spec:
       containers:
-        - image: staillansag/msr-dec-purchase-order:latest
+        - image: staillansag/msr-dec-purchase-order:poc-0.0.3
           imagePullPolicy: Always
           name: purchase-order-msr
           ports:
             - name: metrics
               containerPort: 5555
-          volumeMounts:
-            - mountPath: "/tmp/license"
-              name: licenses
-              readOnly: true
           env:
             - name: SAG_IS_CONFIG_PROPERTIES
               value: /opt/softwareag/IntegrationServer/packages/DecPurchaseOrder/application.properties  
-            - name: SAG_IS_LICENSE_FILE
-              value: /tmp/license/msr-license 
             - name: SERVER_LOCATION
-              value: kubernetes
-            - name: DATASOURCE_CLASS
-              value: org.postgresql.ds.PGSimpleDataSource
-            - name: DB_USER
               valueFrom:
-                secretKeyRef:
-                  name: environment-secrets
-                  key: databaseUser
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: environment-secrets
-                  key: databasePassword
-            - name: DB_SERVERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: environment-config
-                  key: databaseServerName
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: environment-config
-                  key: databaseServerPort
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: environment-config
-                  key: databaseName
+                fieldRef:
+                  fieldPath: metadata.name
             - name: IO_INT_URL
               valueFrom:
                 configMapKeyRef:
@@ -82,11 +51,6 @@ spec:
                 secretKeyRef:
                   name: environment-secrets
                   key: wmioIntegrationPassword
-            - name: KAFKA_SERVER_LIST
-              valueFrom:
-                configMapKeyRef:
-                  name: environment-config
-                  key: kafkaServerList
           livenessProbe:
             tcpSocket:
               port: 5555
@@ -95,10 +59,6 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 5555
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             periodSeconds: 15
             failureThreshold: 12
-      volumes:
-        - name: licenses
-          secret:
-            secretName: licenses
